@@ -111,6 +111,9 @@
                         var json = JSON.stringify(faces, null, '  ');
                         console.log("Success!  The result is:  " + json);
                         console.log("attributes: " + face_attributes);
+                        alert("Holy crap, you are a " + faces.faces[0].attributes.age.value +
+                        " year old " + faces.faces[0].attributes.ethnicity.value + " " + faces.faces[0].attributes.gender.value
+                        );
                     },
                     error: function(error) {
                         console.log("there was an error! " + JSON.stringify(error));
