@@ -1,143 +1,60 @@
 <!DOCTYPE html>
 <html>
+
+<head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Group Project Kiosk by Don, Josh, and Craig (DJC)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script>
+
+    <!-- Adds link to Bootstrap & style.css -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
+
+    <!-- Adds link to JQuery & app.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="assets/javascript/app.js"></script>
+
+    <!-- Adds favicon -->
+    <!-- <link rel="icon" href="assets/images/beerFavicon.png" type="image/gif" sizes="16x16"> -->
 </head>
 
 <body>
 
-    <video autoplay></video>
-    <img src="">
-    <canvas style="display:none;"></canvas>
+    <div class="container.fluid" id="mainContent">
+        <div class="row no-gutters align-items-center">
+            <div class="col-md-8">
+                <div class="row no-gutters">
+                    <div class="col-md-8" id="movie-image">
+                        Movie Image goes here!
+                    </div>
+                    <div class="col-md-4" id="movie-info">
+                        Movie info goes here!
+                    </div>
+                </div>
+                <div class="row no-gutters" id="movie-rating">
+                    Movie rating goes here!
+                </div>
+            </div>
+            <div class="col-md-4" id="rating-history">
+                User rating history in session goes here!
+            </div>
+        </div>
+        <div class="row no-gutters align-items-center">
+            <video autoplay></video>
+            <img src="">
+            <canvas style="display:none;"></canvas>
 
-    <div style="text-align:center;">
-        <video id="screenshot-video" class="videostream" autoplay="true" preload="auto" muted="true" playsinline="true"></video>
-        <img id="screenshot-img" src="data:image/jpeg">
-        <p>
-            <button id="screenshot-button">Take screenshot</button>
-        </p>
+            <div style="text-align:center;">
+                <video id="screenshot-video" class="videostream" autoplay="true" preload="auto" muted="true" playsinline="true"></video>
+                <img id="screenshot-img" src="data:image/jpeg">
+                <p>
+                    <button id="screenshot-button">Take screenshot</button>
+                </p>
+            </div>
+        </div>
     </div>
-
-    <script>
-
-        const constraints = {
-            video: true
-        };
-
-        function hasGetUserMedia() {
-            return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
-        }
-
-        if (hasGetUserMedia()) {
-            // Good to go!
-        } else {
-            alert('getUserMedia() is not supported by your browser');
-        }
-
-
-
-        const button = document.querySelector('#screenshot-button');
-        const img = document.querySelector('#screenshot-img');
-        const video = document.querySelector('#screenshot-video');
-
-        const canvas = document.createElement('canvas');
-
-        button.onclick = video.onclick = function () {
-            // canvas.width = video.videoWidth;
-            canvas.width = 640;
-            // canvas.height = video.videoHeight;
-            canvas.height = 480;
-            canvas.getContext('2d').drawImage(video, 0, 0);
-            // Other browsers will fall back to image/png
-            // img.src = canvas.toDataURL('image/webp');
-            // img.src = canvas.toDataURL('image/png');
-            img.src = canvas.toDataURL('image/jpeg', 1.0);
-            // img.src = canvas.toDataURL({format: 'jpeg', width: 640, height: 480, quality: 1.0});
-            console.log("img.src = " + img.src);
-            var strippedImageSrc = img.src.substring(23,img.src.length);
-            console.log("the stripped img.src = " + strippedImageSrc);
-            // convertCanvasToImage(canvas);
-
-            callFacePP(strippedImageSrc);
-        };
-
-        function handleSuccess(stream) {
-            video.srcObject = stream;
-        }
-
-        function handleError(error) {
-            console.error('Reeeejected!', error);
-        }
-
-        navigator.mediaDevices.getUserMedia(constraints).
-            then(handleSuccess).catch(handleError);
-
-
-        // Converts canvas to an image
-        function convertCanvasToImage(canvas) {
-            var image = new Image();
-            image.src = canvas.toDataURL("image/jpeg");
-            console.log("our image is: " + image.src);
-            return image;
-        }
-
-
-        function callFacePP(img) {
-            var API_URL = "https://api-us.faceplusplus.com/facepp/v3";
-            var API_KEY = "paQtvvWUvJ3j0I_ISUA3_eCHhId9iZFl";
-            var API_SECRET = "3lS34CClXxNX3LnlLfaK9Q4uP8lwiTZX";
-            var face_attributes = "gender,age,smiling,eyestatus,emotion,ethnicity";
-
-            $.ajax({
-                    url: API_URL + '/detect',
-                    method: "POST",
-                    data: {
-                        api_key: API_KEY,
-                        api_secret: API_SECRET,
-                        // image_file: img,
-                        image_base64: img,
-                        // image_url: "https://friendlydentalgroup.com/wp-content/uploads/2015/12/doc-alone-640x480.png",
-                        return_attributes: face_attributes
-                    },
-                    // dataType: 'jsonp',
-                    success: function(faces) {
-                        var json = JSON.stringify(faces, null, '  ');
-                        console.log("Success!  The result is:  " + json);
-                        console.log("attributes: " + face_attributes);
-                        alert("Holy crap, you are a " + faces.faces[0].attributes.age.value +
-                        " year old " + faces.faces[0].attributes.ethnicity.value + " " + faces.faces[0].attributes.gender.value
-                        );
-                    },
-                    error: function(error) {
-                        console.log("there was an error! " + JSON.stringify(error));
-                    },
-                    timeout: 10 * 1000
-                });
-        }
-        // data: {
-        //                 api_key: API_KEY,
-        //                 api_secret: API_SECRET,
-        //                 // image_url: img,
-        //                 image_file: img,
-        //                 // image_url: "https://friendlydentalgroup.com/wp-content/uploads/2015/12/doc-alone-640x480.png",
-        //                 return_attributes: face_attributes
-        //             },
-
-
-
-    </script>
-
-
-
-
-
-
-
 
 </body>
 
