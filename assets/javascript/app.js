@@ -158,4 +158,31 @@ $(document).ready(function () {
     $(".answerButton").click(function () {
         stop();
     });
+
+    var database = Object;
+
+    function connectToFB() {
+        var config = {
+            apiKey: "AIzaSyADB08nKl5i9oLbYvr1G3NwyJ1LGFw13ME",
+            authDomain: "fistoffiverating.firebaseapp.com",
+            databaseURL: "https://fistoffiverating.firebaseio.com",
+            projectId: "fistoffiverating",
+            storageBucket: "fistoffiverating.appspot.com",
+            messagingSenderId: "665383282847"
+        };
+
+        firebase.initializeApp(config);
+        database = firebase.database();
+    }
+
+    function addForMovie(movieTitle, gender, ethnicity, age, zipcode) {
+        console.log("The movie title is: " + movieTitle);
+        database.ref("/" + movieTitle).push({
+            'gender': gender,
+            'ethnicity': ethnicity,
+            'age': age,
+            'zipcode': zipcode
+        });
+    }
+
 });
