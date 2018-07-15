@@ -20,6 +20,10 @@ $(document).ready(function () {
     const canvas = document.createElement('canvas');
 
     video.onclick = video.onclick = function () {
+        // Extract Zip Code
+        var zipcode = $("#zipcode").val().trim();
+        // Console Zipcode
+        console.log(zipcode);
         // canvas.width = video.videoWidth;
         canvas.width = 640;
         // canvas.height = video.videoHeight;
@@ -145,9 +149,8 @@ $(document).ready(function () {
         });
     }
 
-    $("#screenshot-button").click(function () {
-        var zipcode = $("#zipcode").val().trim();
-        console.log(zipcode);
+    $("#screenshot-video").click(function () {
+
     });
 
 
