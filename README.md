@@ -37,3 +37,17 @@ Presentation part:
 
 Tasks:
     - Don has fist of five images
+    - Testing:
+        - mobile responsive
+
+Persistence:
+    - our js will hold the demographic info taken from their pic
+    - after each movie is voted on we will store the following to firebase:
+        - Project will be FistOfFive
+        - Each directory will be the name of the movie
+        - genre
+        - User info (user plus random info to make unique)
+            - gender
+            - age
+            - ethnicity
+            - zipcode
