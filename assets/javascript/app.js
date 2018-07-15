@@ -14,13 +14,12 @@ $(document).ready(function () {
         alert('getUserMedia() is not supported by your browser');
     }
 
-    const button = document.querySelector('#screenshot-button');
     const img = document.querySelector('#screenshot-img');
     const video = document.querySelector('#screenshot-video');
 
     const canvas = document.createElement('canvas');
 
-    button.onclick = video.onclick = function () {
+    video.onclick = video.onclick = function () {
         // canvas.width = video.videoWidth;
         canvas.width = 640;
         // canvas.height = video.videoHeight;
@@ -81,9 +80,9 @@ $(document).ready(function () {
                 var json = JSON.stringify(faces, null, '  ');
                 console.log("Success!  The result is:  " + json);
                 console.log("attributes: " + face_attributes);
-                alert("Holy crap, you are a " + faces.faces[0].attributes.age.value +
-                    " year old " + faces.faces[0].attributes.ethnicity.value + " " + faces.faces[0].attributes.gender.value
-                );
+                // alert("Holy crap, you are a " + faces.faces[0].attributes.age.value +
+                //     " year old " + faces.faces[0].attributes.ethnicity.value + " " + faces.faces[0].attributes.gender.value
+                // );
             },
             error: function (error) {
                 console.log("there was an error! " + JSON.stringify(error));
@@ -147,49 +146,13 @@ $(document).ready(function () {
     }
 
     $("#screenshot-button").click(function () {
-        $("#start").hide();
-        $(".answerButtons").empty();
-        correctAnswers = 0;
-        incorrectAnswers = 0;
-        unanswered = 0;
-        questionIndex = 0;
-        questionTimer();
-        for (var i = 1; i < 5; i++) {
-            var answerButtonDiv = $("<div>")
-            // Assign new button element to variable crystalButton
-            var answerButton = $("<button>");
-            // Assign class, id, and value to each crystalButton
-            answerButton.attr({
-                "class": "answerButton btn btn-block",
-                "id": "option" + i,
-            });
-            answerButtonDiv.append(answerButton);
-            $(".answerButtons").append(answerButtonDiv);
-        }
-        $("#beerQuestion").text(beerQuestions[questionIndex].question);
-        $("#option1").text(beerQuestions[questionIndex].option1);
-        $("#option2").text(beerQuestions[questionIndex].option2);
-        $("#option3").text(beerQuestions[questionIndex].option3);
-        $("#option4").text(beerQuestions[questionIndex].option4);
+        var zipcode = $("#zipcode").val().trim();
+        console.log(zipcode);
+    });
 
-        $(".answerButton").click(function () {
-            stop();
-            var answerValue = $(this).text();
 
-            if (answerValue === beerQuestions[questionIndex].answer) {
-                $("#beerQuestion").text("Correct!");
-                $(".answerButtons").empty();
-                questionIndex++;
-                correctAnswers++;
-                questionBreakTime();
 
-            } else {
-                $("#beerQuestion").text("Nope!");
-                $(".answerButtons").text("The Correct Answer was: " + beerQuestions[questionIndex].answer)
-                questionIndex++;
-                incorrectAnswers++;
-                questionBreakTime();
-            }
-        });
+    $(".answerButton").click(function () {
+        stop();
     });
 });
