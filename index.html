@@ -14,6 +14,8 @@
 
     <!-- Adds link to JQuery & app.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
+        crossorigin="anonymous"></script>
     <script src="assets/javascript/app.js"></script>
 
     <!-- Adds favicon -->
@@ -27,34 +29,59 @@
             <div class="col-md-8">
                 <div class="row no-gutters">
                     <div class="col-md-8" id="movie-image">
-                        Movie Image goes here!
                     </div>
                     <div class="col-md-4" id="movie-info">
-                        Movie info goes here!
                     </div>
                 </div>
                 <div class="row no-gutters" id="movie-rating">
-                    Movie rating goes here!
                 </div>
             </div>
             <div class="col-md-4" id="rating-history">
-                User rating history in session goes here!
             </div>
         </div>
         <div class="row no-gutters align-items-center">
-            <video autoplay></video>
-            <img src="">
-            <canvas style="display:none;"></canvas>
 
-            <div style="text-align:center;">
-                <video id="screenshot-video" class="videostream" autoplay="true" preload="auto" muted="true" playsinline="true"></video>
-                <img id="screenshot-img" src="data:image/jpeg">
-                <p>
-                    <button id="screenshot-button">Take screenshot</button>
-                </p>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                Begin Survey
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel"></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Please enter Zip Code and Take Picture!
+                            <form>
+                                <div class="form-group">
+                                  <label for="zipcode">Zip Code</label>
+                                  <input type="number" class="form-control" id="zipcode" placeholder="XXXXX">
+                                  <video autoplay style="display:none;"></video>
+                                  <img src="">
+                                  <canvas style="display:none;"></canvas>
+                      
+                                  <div style="text-align:center;">
+                                      <video id="screenshot-video" class="videostream" autoplay="true" preload="auto" muted="true" playsinline="true"></video>
+                                      <img id="screenshot-img" style="display:none;" src="data:image/jpeg">
+                                </div>
+                              </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="screenshot-button">Submit</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
 
 </body>
 
