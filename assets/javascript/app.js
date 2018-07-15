@@ -40,6 +40,18 @@ $(document).ready(function () {
         // convertCanvasToImage(canvas);
 
         callFacePP(strippedImageSrc);
+
+        $("#modalIntializeButton").remove();
+
+        console.log(movieDataMap);
+        console.log(movieDataMap.get("It").Poster);
+        // var imgURL = response.Poster
+        // var movieImg = $("<img>");
+        //     movieImg.attr({
+        //         "src" : imgURL,
+        //         "alt" : "movieImg"
+        //     });
+        // $("#movie-image").append(movieImg);
     };
 
     function handleSuccess(stream) {
@@ -111,6 +123,8 @@ $(document).ready(function () {
     //******************************************************************************************************************
     var movieArray = ["It", "The Hangover", "How Stella Got Her Grove Back", "Deadpool", "CaddyShack", "Blair Witch Project", "Bad Boys", "How to Loose A Guy in 10 Days", "Blair Witch Project", "Die Hard", "Black Panther"];
 
+    var movieDataMap = new Map();
+
     var movieSurveyTime = 15
 
     // FUNCTIONS
@@ -140,20 +154,13 @@ $(document).ready(function () {
     for (var i = 0; i < movieArray.length; i++) {
         var queryURL = "https://www.omdbapi.com/?t=" + movieArray[i] + "&y=&plot=short&apikey=trilogy";
 
-        console.log(movieArray[i]);
         $.ajax({
             url: queryURL,
             method: "GET"
-        }).then(function (response) {
-            console.log(response);
+        }).then(function(response) {
+            movieDataMap.set(response.Title, response);
         });
     }
-
-    $("#screenshot-video").click(function () {
-
-    });
-
-
 
     $(".answerButton").click(function () {
         stop();
