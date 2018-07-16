@@ -24,8 +24,8 @@
 
 <body>
 
-    <div class="container.fluid" id="mainContent">
-        <div class="row no-gutters align-items-center">
+    <div class="container.fluid">
+        <div class="row no-gutters">
             <div class="col-md-8">
                 <div class="row no-gutters">
                     <div class="col-md-8" id="movie-image">
@@ -33,7 +33,7 @@
                     <div class="col-md-4" id="movie-info">
                     </div>
                 </div>
-                <div class="row no-gutters" id="movie-rating">
+                <div class="row no-gutters text-center" id="movie-rating">
                 </div>
             </div>
             <div class="col-md-4" id="rating-history">
@@ -62,7 +62,8 @@
                                 <div class="form-group">
                                   <label for="zipcode">Zip Code</label>
                                   <input type="number" class="form-control" id="zipcode" min="00000" max="99999" placeholder="XXXXX">
-                      
+                                    <br>
+                                    <h6>Tap the video stream to snap your picture!</h6>
                                   <div style="text-align:center;">
                                       <video id="screenshot-video" class="videostream" data-dismiss="modal" autoplay="true" preload="auto" muted="true" playsinline="true"></video>
                                       <img id="screenshot-img" style="display:none;" src="data:image/jpeg">
@@ -74,7 +75,6 @@
             </div>
         </div>
     </div>
-
 
 </body>
 

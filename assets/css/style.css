@@ -1,3 +1,35 @@
 div {
     border: 1px solid red;
 }
+
+/* Setting for all four rating buttons */
+.ratingButtons {
+    height: 111px;
+    width: 111px;
+    margin: 10px 10px 10px 0px;
+}
+
+/* Rating Button 1 Background Image */
+#ratingButton1 {
+    background-image: url("..//images/fist\ for\ 5\ -\ 1.png");
+}
+
+/* Rating Button 2 Background Image */
+#ratingButton2 {
+    background-image: url("..//images/fist\ for\ 5\ -\ 2.png");
+}
+
+/* Rating Button 3 Background Image */
+#ratingButton3 {
+    background-image: url("..//images/fist\ for\ 5\ -\ 3.png");
+}
+
+/* Rating Button 4 Background Image */
+#ratingButton4 {
+    background-image: url("..//images/fist\ for\ 5\ -\ 4.png");
+}
+
+/* Rating Button 5 Background Image */
+#ratingButton5 {
+    background-image: url("..//images/fist\ for\ 5\ -\ 5.png");
+}
