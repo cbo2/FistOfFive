@@ -19,7 +19,7 @@
     <script src="assets/javascript/app.js"></script>
 
     <!-- Adds favicon -->
-    <!-- <link rel="icon" href="assets/images/beerFavicon.png" type="image/gif" sizes="16x16"> -->
+    <link rel="icon" href="assets/images/movieReelFavicon.png" type="image/gif" sizes="16x16">
 </head>
 
 <body>
@@ -28,9 +28,9 @@
         <div class="row no-gutters">
             <div class="col-md-8">
                 <div class="row no-gutters">
-                    <div class="col-md-5" id="movie-image">
+                    <div class="col-md-6" id="movie-posters">
                     </div>
-                    <div class="col-md-7" id="movie-info">
+                    <div class="col-md-6" id="movie-info">
                     </div>
                 </div>
                 <div class="row no-gutters text-center" id="movie-rating">
@@ -42,29 +42,28 @@
         <div class="row no-gutters align-items-center">
 
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" id="modalIntializeButton" data-toggle="modal" data-target="#exampleModal">
+            <button type="button" class="btn btn-primary" id="modalIntializeButton" data-toggle="modal" data-target="#startSurveyModal">
                 Begin Survey
             </button>
 
             <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="startSurveyModal" tabindex="-1" role="dialog" aria-labelledby="startSurveyModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel"></h5>
+                            <h5 class="modal-title" id="startSurveyModalLabel">Please enter Zip Code and Take Picture!</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            Please enter Zip Code and Take Picture!
                             <form>
                                 <div class="form-group">
                                   <label for="zipcode">Zip Code</label>
                                   <input type="number" class="form-control" id="zipcode" min="00000" max="99999" placeholder="XXXXX">
                                     <br>
                                     <h6>Tap the video stream to snap your picture!</h6>
-                                  <div style="text-align:center;">
+                                  <div class="text-center">
                                       <video id="screenshot-video" class="videostream" data-dismiss="modal" autoplay="true" preload="auto" muted="true" playsinline="true"></video>
                                       <img id="screenshot-img" style="display:none;" src="data:image/jpeg">
                                 </div>
