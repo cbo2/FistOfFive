@@ -39,3 +39,9 @@
 #ratingButton5 {
     background-image: url("..//images/fist5-5.png");
 }
+
+#age-graph {
+	width		: 33%;
+	height		: 500px;
+	font-size	: 11px;
+}	

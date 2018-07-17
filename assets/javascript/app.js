@@ -237,9 +237,11 @@ $(document).ready(function () {
         database = firebase.database();
     }
 
-    function addForMovie(movieTitle, gender, ethnicity, age, zipcode) {
+    function addForMovie(movieTitle, fistOfFiveVote, gender, ethnicity, age, zipcode) {
         console.log("The movie title is: " + movieTitle);
         database.ref("/" + movieTitle).push({
+            'movieTitle': movieTitle,
+            'fistOfFive': fistOfFiveVote,
             'gender': gender,
             'ethnicity': ethnicity,
             'age': age,
