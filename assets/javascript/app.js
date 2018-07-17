@@ -192,6 +192,15 @@ $(document).ready(function () {
             $("#movie-rating").empty();
             // Append a final message once movie survey is completed in index.html
             $("#movie-rating").append("<h1>All Done! Thanks for taking the survery!</h1>")
+            
+            var closeWindowButton = $("<button>");
+            closeWindowButton.attr({
+                "type" : "button",
+                "class" : "btn btn-primary",
+                "onclick" : "javacript:window.close()"
+            })
+            closeWindowButton.text("Click to Close");
+            $("#movie-rating").append(closeWindowButton);
         // Run this code if not all of the movies have been rated
         } else {
             // Empty contents of movie-image div in index.html
