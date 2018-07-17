@@ -81,11 +81,12 @@ $(document).ready(function () {
         // Assign src and alt to the movieImg element
         movieImg.attr({
             "class" : "img-fluid rounded",
+            "id" : "movie-poster",
             "src": imgURL,
-            "alt": movieArray[movieArrayIndex] + " Poster"
+            "alt": movieArray[movieArrayIndex] + " Poster",
         });
-        // Append the movie poster into movie-image div in index.html
-        $("#movie-image").append(movieImg);
+        // Append the movie poster into movie-posters div in index.html
+        $("#movie-posters").append(movieImg);
         // Append the movie info into movie-info div in index.html
         $("#movie-info").append("<p>Title: " + movieDataMap.get(movieArray[movieArrayIndex]).Title + "</p>");
         $("#movie-info").append("<p>Actors: " + movieDataMap.get(movieArray[movieArrayIndex]).Actors + "</p>");
@@ -181,8 +182,8 @@ $(document).ready(function () {
 
         // Run this code if not all of the movies have been rated
         if (movieArrayIndex < movieArray.length - 1) {
-            // Empty contents of movie-image div in index.html
-            $("#movie-image").empty();
+            // Empty contents of movie-posters div in index.html
+            $("#movie-posters").empty();
             // Empty contents of movie-info div in index.html
             $("#movie-info").empty();
             // Assign the value of the rating to variable userRating when clicked
@@ -199,8 +200,8 @@ $(document).ready(function () {
             // Assign the value of the rating to variable userRating when clicked for last movie rated in survey
             var userRating = parseInt($(this).attr("ratingValue"));
             $("#rating-history").append(movieArray[movieArrayIndex] + ": " + userRating + "<br><hr>");
-            // Empty contents of movie-image div in index.html
-            $("#movie-image").empty();
+            // Empty contents of movie-posters div in index.html
+            $("#movie-posters").empty();
             // Empty contents of movie-info div in index.html
             $("#movie-info").empty();
             // Empty contents of movie-rating div in index.html

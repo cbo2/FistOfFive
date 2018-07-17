@@ -6,7 +6,13 @@
 .ratingButtons {
     height: 100px;
     width: 80px;
-    margin: 10px 10px 10px 0px;
+    margin: 5px 5px 5px 0px;
+}
+
+/* Setting for movie Posters */
+#movie-poster {
+    height: 525px;
+    width: 350px;
 }
 
 /* Rating Button 1 Background Image */
