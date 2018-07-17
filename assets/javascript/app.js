@@ -80,8 +80,9 @@ $(document).ready(function () {
         var movieImg = $("<img>");
         // Assign src and alt to the movieImg element
         movieImg.attr({
+            "class" : "img-fluid rounded",
             "src": imgURL,
-            "alt": movieArray[movieArrayIndex] + " Poster",
+            "alt": movieArray[movieArrayIndex] + " Poster"
         });
         // Append the movie poster into movie-image div in index.html
         $("#movie-image").append(movieImg);
@@ -151,8 +152,6 @@ $(document).ready(function () {
 
         // Function removes information from movie just rated and adds info for the next movie in index.html
         movieSurvey();
-        // Increase movieArrayIndex by one
-        movieArrayIndex++;
 
         // Creates five buttons for ratings
         for (var i = 0; i < 5; i++) {
@@ -177,13 +176,29 @@ $(document).ready(function () {
     // Intiates timer that is currently not being used for any purpose
     movieSurveyTimer();
 
-    // // If user rates a movie, then execute the below code to move to the next movie until rated all movies
+    // If user rates a movie, then execute the below code to move to the next movie until rated all movies
     $(document).on('click', ".ratingButtons", function () {
+
+        // Run this code if not all of the movies have been rated
+        if (movieArrayIndex < movieArray.length - 1) {
+            // Empty contents of movie-image div in index.html
+            $("#movie-image").empty();
+            // Empty contents of movie-info div in index.html
+            $("#movie-info").empty();
+            // Assign the value of the rating to variable userRating when clicked
+            var userRating = parseInt($(this).attr("ratingValue"));
+            // Append the movie rating into rating-history div in index.html
+            $("#rating-history").append(movieArray[movieArrayIndex] + ": " + userRating + "<br><hr>");
+            // Increase movieArrayIndex by one
+            movieArrayIndex++;
+            // Function removes information from movie just rated and adds info for the next movie in index.html
+            movieSurvey();
+
         // Run this code if all movies have been rated
-        if (movieArrayIndex > movieArray.length - 1) {
+        } else {
             // Assign the value of the rating to variable userRating when clicked for last movie rated in survey
             var userRating = parseInt($(this).attr("ratingValue"));
-            $("#rating-history").append(movieArray[movieArrayIndex - 1] + ": " + userRating + "<br><hr>");
+            $("#rating-history").append(movieArray[movieArrayIndex] + ": " + userRating + "<br><hr>");
             // Empty contents of movie-image div in index.html
             $("#movie-image").empty();
             // Empty contents of movie-info div in index.html
@@ -191,30 +206,16 @@ $(document).ready(function () {
             // Empty contents of movie-rating div in index.html
             $("#movie-rating").empty();
             // Append a final message once movie survey is completed in index.html
-            $("#movie-rating").append("<h1>All Done! Thanks for taking the survery!</h1>")
-            
+            $("#movie-rating").append("<h1>All Done! Thanks for taking the survey!</h1>")
+
             var closeWindowButton = $("<button>");
             closeWindowButton.attr({
-                "type" : "button",
-                "class" : "btn btn-primary",
-                "onclick" : "javacript:window.close()"
+                "type": "button",
+                "class": "btn btn-primary",
+                "onclick": "javacript:window.close()"
             })
             closeWindowButton.text("Click to Close");
             $("#movie-rating").append(closeWindowButton);
-        // Run this code if not all of the movies have been rated
-        } else {
-            // Empty contents of movie-image div in index.html
-            $("#movie-image").empty();
-            // Empty contents of movie-info div in index.html
-            $("#movie-info").empty();
-            // Assign the value of the rating to variable userRating when clicked
-            var userRating = parseInt($(this).attr("ratingValue"));
-            // Function removes information from movie just rated and adds info for the next movie in index.html
-            movieSurvey();
-            // Append the movie rating into rating-history div in index.html
-            $("#rating-history").append(movieArray[movieArrayIndex - 1] + ": " + userRating + "<br><hr>");
-            // Increase movieArrayIndex by one
-            movieArrayIndex++;
         }
     });
 
