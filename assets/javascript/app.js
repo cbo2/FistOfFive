@@ -90,7 +90,6 @@ $(document).ready(function () {
         $("#movie-info").append("<p>Title: " + movieDataMap.get(movieArray[movieArrayIndex]).Title + "</p>");
         $("#movie-info").append("<p>Actors: " + movieDataMap.get(movieArray[movieArrayIndex]).Actors + "</p>");
         $("#movie-info").append("<p>Genre: " + movieDataMap.get(movieArray[movieArrayIndex]).Genre + "</p>");
-        console.log(movieArrayIndex);
     }
 
     // Function to run decrementMovieSurveyTime function every second
