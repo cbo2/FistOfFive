@@ -24,6 +24,12 @@ $(document).ready(function () {
     // To be used? If so, then either each question will have a timer or the survey overall will have a timer
     var movieSurveyTime = 15
 
+    // demographic data
+    var age = 0;
+    var ethnicity = "";
+    var gender = "";
+    var zipcode = "";
+
     // FUNCTIONS
     //******************************************************************************************************************
     //******************************************************************************************************************
@@ -62,7 +68,14 @@ $(document).ready(function () {
             // dataType: 'jsonp',
             success: function (faces) {
                 var json = JSON.stringify(faces, null, '  ');
+                age = faces.faces[0].attributes.age.value;
+                ethnicity = faces.faces[0].attributes.ethnicity.value;
+                gender = faces.faces[0].attributes.gender.value;
+
                 console.log("Success!  The result is:  " + json);
+                console.log("====== age is: " + age);
+                console.log("====== ethnicity is: " + ethnicity);
+                console.log("====== gender is: " + gender);
                 console.log("attributes: " + face_attributes);
             },
             error: function (error) {
@@ -146,7 +159,7 @@ $(document).ready(function () {
     // If user clicks on video camera feed, then execute the below code
     video.onclick = video.onclick = function () {
         // Extract Zip Code
-        var zipcode = $("#zipcode").val().trim();
+        zipcode = $("#zipcode").val().trim();
         // If zipcode equals to blank or zipcode is less than or greater than 5, then execute below code
         if (zipcode === "" || zipcode.length < 5 || zipcode.length > 5) {
             $("#zipcodeErrorModal").modal("show");
@@ -214,6 +227,8 @@ $(document).ready(function () {
             var userRating = parseInt($(this).attr("ratingValue"));
             // Append the movie rating into rating-history div in index.html
             $("#rating-history").append(movieArray[movieArrayIndex] + ": " + userRating + "<br><hr>");
+            console.log("User just rated " + movieArray[movieArrayIndex] + " with a value of: " + userRating);
+            addForMovie(movieArray[movieArrayIndex], userRating, gender, ethnicity, age, zipcode);
             // Increase movieArrayIndex by one
             movieArrayIndex++;
             // Function removes information from movie just rated and adds info for the next movie in index.html
@@ -248,6 +263,8 @@ $(document).ready(function () {
     // This code will send data to Firebase
     var database = Object;
 
+    connectToFB();
+
     function connectToFB() {
         var config = {
             apiKey: "AIzaSyADB08nKl5i9oLbYvr1G3NwyJ1LGFw13ME",
@@ -264,7 +281,7 @@ $(document).ready(function () {
 
     function addForMovie(movieTitle, fistOfFiveVote, gender, ethnicity, age, zipcode) {
         console.log("The movie title is: " + movieTitle);
-        database.ref("/" + movieTitle).push({
+        database.ref("/").push({
             'movieTitle': movieTitle,
             'fistOfFive': fistOfFiveVote,
             'gender': gender,
