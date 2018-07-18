@@ -2,17 +2,19 @@
     border: 1px solid red;
 } */
 
-/* Setting for all four rating buttons */
-.ratingButtons {
-    height: 100px;
-    width: 80px;
-    margin: 5px 5px 5px 0px;
+.container {
+    margin: 10px
 }
 
-/* Setting for movie Posters */
+/* Setting for all four rating buttons */
+.ratingButtons {
+    height: 80px;
+    width: 70px;
+    margin: 1px 1px 1px 0px;
+}
+
 #movie-poster {
-    height: 525px;
-    width: 350px;
+    width: 350px
 }
 
 /* Rating Button 1 Background Image */
