@@ -23,7 +23,6 @@
 </head>
 
 <body>
-
     <div class="container.fluid">
         <div class="row no-gutters">
             <div class="col-md-8">
@@ -40,46 +39,49 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4" id="rating-history">
+            <div class="col-md-4" id="rating-history" style="display: none">
                 <h3>Rating History:</h3>
                 <hr>
             </div>
         </div>
         <div class="row no-gutters align-items-center">
+        </div>
+    </div>
 
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" id="modalIntializeButton" data-toggle="modal" data-target="#startSurveyModal">
-                Begin Survey
-            </button>
+    <!-- Button trigger modal -->
+    <div class="row justify-content-center">
+        <button type="button" class="btn-lg btn-primary" id="modalIntializeButton" data-toggle="modal" data-target="#startSurveyModal">
+            Begin Survey
+        </button>
+    </div>
 
-            <!-- Modal -->
-            <div class="modal fade" id="startSurveyModal" tabindex="-1" role="dialog" aria-labelledby="startSurveyModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="startSurveyModalLabel">Please enter Zip Code and Take Picture!</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="form-group">
-                                    <label for="zipcode">Zip Code</label>
-                                    <input type="number" class="form-control" id="zipcode" min="00000" max="99999" placeholder="XXXXX">
-                                    <br>
-                                    <h6>Tap the video stream to snap your picture!</h6>
-                                    <div class="text-center">
-                                        <video id="screenshot-video" class="videostream" data-dismiss="modal" autoplay="true" preload="auto" muted="true" playsinline="true"></video>
-                                        <img id="screenshot-img" style="display:none;" src="data:image/jpeg">
-                                    </div>
-                            </form>
+    <!-- Modal -->
+    <div class="modal fade" id="startSurveyModal" tabindex="-1" role="dialog" aria-labelledby="startSurveyModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title modal-text-color" id="startSurveyModalLabel">Please enter Zip Code and Take Picture!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="zipcode" class="modal-text-color" id="zipcode-text">Zip Code</label>
+                            <input type="number" class="form-control modal-text-color" id="zipcode" min="00000" max="99999" placeholder="XXXXX">
+                            <br>
+                            <h6>Tap the video stream to snap your picture!</h6>
+                            <div class="text-center">
+                                <video id="screenshot-video" class="videostream" data-dismiss="modal" autoplay="true" preload="auto" muted="true" playsinline="true"></video>
+                                <img id="screenshot-img" style="display:none;" src="data:image/jpeg">
                             </div>
-                        </div>
+                    </form>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
 </body>
 

@@ -3,6 +3,28 @@ body {
     background: #000000 url("../images/country-quilt-dark.png") repeat right top;
 }
 
+div {
+    color: #ffffff;
+    /* border: 1px solid red; */
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0; 
+}
+
+.modal-text-color {
+    color: #000000;
+}
+
+#modalIntializeButton {
+    margin-top: 250px;
+}
+
 /* Setting for all four rating buttons */
 .ratingButtons {
     height: 80px;
