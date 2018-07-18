@@ -80,8 +80,8 @@ $(document).ready(function () {
         var movieImg = $("<img>");
         // Assign src and alt to the movieImg element
         movieImg.attr({
-            "class" : "img-fluid rounded mx-auto d-block",
-            "id" : "movie-poster",
+            "class": "img-fluid rounded mx-auto d-block",
+            "id": "movie-poster",
             "src": imgURL,
             "alt": movieArray[movieArrayIndex] + " Poster",
         });
@@ -93,7 +93,7 @@ $(document).ready(function () {
         $("#movie-info").append("<h2>Actors/Actresses</h2>");
         $("#movie-info").append("<h4>" + movieDataMap.get(movieArray[movieArrayIndex]).Actors + "</h4><br>");
         $("#movie-info").append("<h2>Genre</h2>");
-        $("#movie-info").append("<h4>" + movieDataMap.get(movieArray[movieArrayIndex]).Genre + "</h4>");
+        $("#movie-info").append("<h4>" + movieDataMap.get(movieArray[movieArrayIndex]).Genre + "</h4><br>");
     }
 
     // Function to run decrementMovieSurveyTime function every second
@@ -138,41 +138,61 @@ $(document).ready(function () {
         alert('getUserMedia() is not supported by your browser');
     }
 
+    // If user clicks on Start Survey button, then execute the below code
+    $("#modalIntializeButton").on('click', function () {
+        //Prevent modal from closing by clicking outside of modal
+    });
+
     // If user clicks on video camera feed, then execute the below code
     video.onclick = video.onclick = function () {
-        $("#rating-history").attr("style","display: block");
         // Extract Zip Code
         var zipcode = $("#zipcode").val().trim();
-        console.log(zipcode);
-        canvas.width = 640;
-        canvas.height = 480;
-        canvas.getContext('2d').drawImage(video, 0, 0);
-        img.src = canvas.toDataURL('image/jpeg', 1.0);
-        var strippedImageSrc = img.src.substring(23, img.src.length);
+        // If zipcode equals to blank or zipcode is less than or greater than 5, then execute below code
+        if (zipcode === "" || zipcode.length < 5 || zipcode.length > 5) {
+            $("#zipcodeErrorModal").modal("show");
+            // If zipcode filled in properly, then execute below code
+        } else {
+            // Sets canvas width to 640 pixels
+            canvas.width = 640;
+            // Sets canvas height to 480 pixels
+            canvas.height = 480;
+            // Creates picture to pass to Face++
+            canvas.getContext('2d').drawImage(video, 0, 0);
+            // Saves data into a binary url????????
+            img.src = canvas.toDataURL('image/jpeg', 1.0);
+            // Removes part of binary code to work with Face++?????
+            var strippedImageSrc = img.src.substring(23, img.src.length);
 
-        callFacePP(strippedImageSrc);
+            // Passes photo taken to Face++
+            callFacePP(strippedImageSrc);
 
-        // Remove button used to begin survey
-        $("#modalIntializeButton").remove();
+            // This will hide the modal that is brought up when user clicks on the submit survey button
+            $("#startSurveyModal").modal("hide")
 
-        // Function removes information from movie just rated and adds info for the next movie in index.html
-        movieSurvey();
+            // Remove button used to begin survey
+            $("#modalIntializeButton").remove();
 
-        // Creates five buttons for ratings
-        for (var i = 0; i < 5; i++) {
-            // Assign a new button element to variable ratingButton
-            var ratingButton = $("<button>");
-            // Assign class, id, and value to each ratingButton
-            ratingButton.attr({
-                "class": "ratingButtons",
-                "id": "ratingButton" + (i + 1),
-                "ratingValue": i + 1
-            });
-            // Add ratingButton to the movie-rating div in index.html
-            $("#movie-rating").append(ratingButton);
+            // Function removes information from movie just rated and adds info for the next movie in index.html
+            movieSurvey();
+
+            // Displays content existing in the rating-history div in index.html
+            $("#rating-history").attr("style", "display: block");
+
+            // Creates five buttons for ratings
+            for (var i = 0; i < 5; i++) {
+                // Assign a new button element to variable ratingButton
+                var ratingButton = $("<button>");
+                // Assign class, id, and value to each ratingButton
+                ratingButton.attr({
+                    "class": "ratingButtons",
+                    "id": "ratingButton" + (i + 1),
+                    "ratingValue": i + 1
+                });
+                // Add ratingButton to the movie-rating div in index.html
+                $("#movie-rating").append(ratingButton);
+            }
         }
-        console.log(movieDataMap);
-    };
+    }
 
     // This code relates to the camera video.
     navigator.mediaDevices.getUserMedia(constraints).
@@ -199,7 +219,7 @@ $(document).ready(function () {
             // Function removes information from movie just rated and adds info for the next movie in index.html
             movieSurvey();
 
-        // Run this code if all movies have been rated
+            // Run this code if all movies have been rated
         } else {
             // Assign the value of the rating to variable userRating when clicked for last movie rated in survey
             var userRating = parseInt($(this).attr("ratingValue"));
@@ -211,16 +231,17 @@ $(document).ready(function () {
             // Empty contents of movie-rating div in index.html
             $("#movie-rating").empty();
             // Append a final message once movie survey is completed in index.html
-            $("#movie-rating").append("<h1>All Done! Thanks for taking the survey!</h1>")
+            $("#end-div").append("<h1 class=text-center>All Done! Thanks for taking the survey!</h1><br>")
 
             var closeWindowButton = $("<button>");
             closeWindowButton.attr({
                 "type": "button",
-                "class": "btn btn-primary",
+                "class": "btn-lg btn-primary",
                 "onclick": "javacript:window.close()"
             })
             closeWindowButton.text("Click to Close");
-            $("#movie-rating").append(closeWindowButton);
+            $("#end-button-div").append(closeWindowButton);
+            $("#rating-history").prepend("<br>");
         }
     });
 
@@ -252,5 +273,4 @@ $(document).ready(function () {
             'zipcode': zipcode
         });
     }
-
 });
