@@ -80,7 +80,7 @@ $(document).ready(function () {
         var movieImg = $("<img>");
         // Assign src and alt to the movieImg element
         movieImg.attr({
-            "class" : "img-fluid rounded",
+            "class" : "img-fluid rounded mx-auto d-block",
             "id" : "movie-poster",
             "src": imgURL,
             "alt": movieArray[movieArrayIndex] + " Poster",
@@ -88,9 +88,12 @@ $(document).ready(function () {
         // Append the movie poster into movie-posters div in index.html
         $("#movie-posters").append(movieImg);
         // Append the movie info into movie-info div in index.html
-        $("#movie-info").append("<p>Title: " + movieDataMap.get(movieArray[movieArrayIndex]).Title + "</p>");
-        $("#movie-info").append("<p>Actors: " + movieDataMap.get(movieArray[movieArrayIndex]).Actors + "</p>");
-        $("#movie-info").append("<p>Genre: " + movieDataMap.get(movieArray[movieArrayIndex]).Genre + "</p>");
+        $("#movie-info").append("<h2>Title</h2>");
+        $("#movie-info").append("<h4>" + movieDataMap.get(movieArray[movieArrayIndex]).Title + "</h4><br>");
+        $("#movie-info").append("<h2>Actors/Actresses</h2>");
+        $("#movie-info").append("<h4>" + movieDataMap.get(movieArray[movieArrayIndex]).Actors + "</h4><br>");
+        $("#movie-info").append("<h2>Genre</h2>");
+        $("#movie-info").append("<h4>" + movieDataMap.get(movieArray[movieArrayIndex]).Genre + "</h4>");
     }
 
     // Function to run decrementMovieSurveyTime function every second
