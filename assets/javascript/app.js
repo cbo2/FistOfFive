@@ -151,9 +151,6 @@ $(document).ready(function () {
 
         callFacePP(strippedImageSrc);
 
-        // Remove button used to begin survey
-        $("#modalIntializeButton").remove();
-
         // Function removes information from movie just rated and adds info for the next movie in index.html
         movieSurvey();
 
