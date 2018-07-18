@@ -141,7 +141,6 @@ $(document).ready(function () {
     // If user clicks on video camera feed, then execute the below code
     video.onclick = video.onclick = function () {
         $("#rating-history").attr("style","display: block");
-        style="display: none"
         // Extract Zip Code
         var zipcode = $("#zipcode").val().trim();
         console.log(zipcode);
