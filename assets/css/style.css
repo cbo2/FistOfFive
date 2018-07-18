@@ -1,9 +1,6 @@
-/* div {
-    border: 1px solid red;
-} */
-
-.container {
-    margin: 10px
+/* Adds background image */
+body {
+    background: #000000 url("../images/country-quilt-dark.png") repeat right top;
 }
 
 /* Setting for all four rating buttons */
