@@ -4,6 +4,7 @@ $(document).ready(function () {
     //******************************************************************************************************************
     //******************************************************************************************************************
 
+    // Video camera
     const constraints = {
         video: true
     };
@@ -21,9 +22,6 @@ $(document).ready(function () {
     // Map will hold all of the movie data from OMDB
     var movieDataMap = new Map();
 
-    // To be used? If so, then either each question will have a timer or the survey overall will have a timer
-    var movieSurveyTime = 15
-
     // demographic data
     var age = 0;
     var ethnicity = "";
@@ -34,17 +32,32 @@ $(document).ready(function () {
     //******************************************************************************************************************
     //******************************************************************************************************************
 
+    // Function to initialize connection to Firebase
+    function connectToFB() {
+        var config = {
+            apiKey: "AIzaSyADB08nKl5i9oLbYvr1G3NwyJ1LGFw13ME",
+            authDomain: "fistoffiverating.firebaseapp.com",
+            databaseURL: "https://fistoffiverating.firebaseio.com",
+            projectId: "fistoffiverating",
+            storageBucket: "fistoffiverating.appspot.com",
+            messagingSenderId: "665383282847"
+        };
+
+        firebase.initializeApp(config);
+        database = firebase.database();
+    }
+
     // Function to check if window supports camera functionality
     function hasGetUserMedia() {
         return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
     }
 
-    // Function for video, but for what?????????????????????
+    // Function for video to determine if video stream works
     function handleSuccess(stream) {
         video.srcObject = stream;
     }
 
-    // Function for video, but for what?????????????????????
+    // Function if video stream fails
     function handleError(error) {
         console.error('Reeeejected!', error);
     }
@@ -109,25 +122,6 @@ $(document).ready(function () {
         $("#movie-info").append("<h4>" + movieDataMap.get(movieArray[movieArrayIndex]).Genre + "</h4><br>");
     }
 
-    // Function to run decrementMovieSurveyTime function every second
-    function movieSurveyTimer() {
-        intervalId = setInterval(decrementMovieSurveyTime, 1000);
-    }
-
-    // Function run every second (currently only decrmenting the time until variable movieSurveyTime equals 0)
-    function decrementMovieSurveyTime() {
-        movieSurveyTime--;
-        if (movieSurveyTime === 0) {
-            stop();
-            // What do you want to do once the 60 second is up?  Time by each rating having a time? Or the entire survey has time?
-        }
-    }
-
-    // Function to stop decrementing once movieSurveyTime equals 0
-    function stop() {
-        clearInterval(intervalId);
-    }
-
     // MAIN PROCESS
     //******************************************************************************************************************
     //******************************************************************************************************************
@@ -153,7 +147,7 @@ $(document).ready(function () {
 
     // If user clicks on Start Survey button, then execute the below code
     $("#modalIntializeButton").on('click', function () {
-        //Prevent modal from closing by clicking outside of modal
+        //Prevent modal from closing by clicking outside of modal to be coded
     });
 
     // If user clicks on video camera feed, then execute the below code
@@ -171,9 +165,10 @@ $(document).ready(function () {
             canvas.height = 480;
             // Creates picture to pass to Face++
             canvas.getContext('2d').drawImage(video, 0, 0);
-            // Saves data into a binary url????????
+            
+            // Saves data into a url
             img.src = canvas.toDataURL('image/jpeg', 1.0);
-            // Removes part of binary code to work with Face++?????
+            // Removes part of binary code to work with Face++
             var strippedImageSrc = img.src.substring(23, img.src.length);
 
             // Passes photo taken to Face++
@@ -211,9 +206,6 @@ $(document).ready(function () {
     navigator.mediaDevices.getUserMedia(constraints).
         then(handleSuccess).catch(handleError);
 
-    // Intiates timer that is currently not being used for any purpose
-    movieSurveyTimer();
-
     // If user rates a movie, then execute the below code to move to the next movie until rated all movies
     $(document).on('click', ".ratingButtons", function () {
 
@@ -227,7 +219,9 @@ $(document).ready(function () {
             var userRating = parseInt($(this).attr("ratingValue"));
             // Append the movie rating into rating-history div in index.html
             $("#rating-history").append(movieArray[movieArrayIndex] + ": " + userRating + "<br><hr>");
+            
             console.log("User just rated " + movieArray[movieArrayIndex] + " with a value of: " + userRating);
+            // Function sends data to Firebase
             addForMovie(movieArray[movieArrayIndex], userRating, gender, ethnicity, age, zipcode);
             // Increase movieArrayIndex by one
             movieArrayIndex++;
@@ -264,20 +258,6 @@ $(document).ready(function () {
     var database = Object;
 
     connectToFB();
-
-    function connectToFB() {
-        var config = {
-            apiKey: "AIzaSyADB08nKl5i9oLbYvr1G3NwyJ1LGFw13ME",
-            authDomain: "fistoffiverating.firebaseapp.com",
-            databaseURL: "https://fistoffiverating.firebaseio.com",
-            projectId: "fistoffiverating",
-            storageBucket: "fistoffiverating.appspot.com",
-            messagingSenderId: "665383282847"
-        };
-
-        firebase.initializeApp(config);
-        database = firebase.database();
-    }
 
     function addForMovie(movieTitle, fistOfFiveVote, gender, ethnicity, age, zipcode) {
         console.log("The movie title is: " + movieTitle);
