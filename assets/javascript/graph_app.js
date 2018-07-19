@@ -13,7 +13,7 @@ $(document).ready(function () {
                 "position": "top",
                 "valueAlign": "left",
                 "valueWidth": 100,
-              },
+            },
             "dataProvider": generateAgeChartData(),
             "valueAxes": [{
                 "position": "left",
@@ -123,38 +123,53 @@ $(document).ready(function () {
         ageData.push(
             {
                 "age": "<30",
-                "It": 4.8,
-                "Bad Boys": 3.3,
-                "Caddyshack": 3.7
+                "It": 0,
+                "The Hangover": 0,
+                "The Notebook": 0,
+                "Deadpool": 0,
+                "Bad Boys": 0,
+                "Caddyshack": 0,
+                "Die Hard": 0,
+                "Black Panther": 0
             }
         );
         ageData.push(
             {
                 "age": "30-39",
-                "It": 3.2,
-                "Bad Boys": 4,
-                "Caddyshack": 4.2
+                "It": 0,
+                "The Hangover": 0,
+                "The Notebook": 0,
+                "Deadpool": 0,
+                "Bad Boys": 0,
+                "Caddyshack": 0,
+                "Die Hard": 0,
+                "Black Panther": 0
             }
         );
         ageData.push(
             {
                 "age": "40--49",
-                "It": 2.0,
-                "Bad Boys": 4.2,
-                "Caddyshack": 5.0
+                "It": 0,
+                "The Hangover": 0,
+                "The Notebook": 0,
+                "Deadpool": 0,
+                "Bad Boys": 0,
+                "Caddyshack": 0,
+                "Die Hard": 0,
+                "Black Panther": 0
             }
         );
         ageData.push(
             {
                 "age": ">50",
-                "It": 1.4,
-                "The Hangover": 2.9,
-                "The Notebook": 3,
-                "Deadpool": 4.1,
-                "Bad Boys": 3.9,
-                "Caddyshack": 5,
-                "Die Hard": 5,
-                "Black Panther": 3.7
+                "It": 0,
+                "The Hangover": 0,
+                "The Notebook": 0,
+                "Deadpool": 0,
+                "Bad Boys": 0,
+                "Caddyshack": 0,
+                "Die Hard": 0,
+                "Black Panther": 0
             }
         );
 
@@ -188,7 +203,7 @@ $(document).ready(function () {
             'movieTitle': "Bad Boys",
             'fistOfFive': 2,
             'gender': "female",
-            'ethnicity': "white",
+            'ethnicity': "WHITE",
             'age': 31,
             'zipcode': 60606
         });
@@ -196,7 +211,7 @@ $(document).ready(function () {
             'movieTitle': "Bad Boys",
             'fistOfFive': 3,
             'gender': "female",
-            'ethnicity': "white",
+            'ethnicity': "WHITE",
             'age': 32,
             'zipcode': 60606
         });
@@ -204,13 +219,13 @@ $(document).ready(function () {
             'movieTitle': "Bad Boys",
             'fistOfFive': 5,
             'gender': "female",
-            'ethnicity': "white",
+            'ethnicity': "WHITE",
             'age': 39,
             'zipcode': 60606
         });
     }
 
-    
+
     // "It", "The Hangover", "The Notebook", "Deadpool", "Bad Boys", "Caddyshack", "Die Hard", "Black Panther"
     // TODO - if we don't have access to the movieTitle, need to do this:
     //     database.ref("/Caddyshack").on("child_added", function(snapshot) {
@@ -223,71 +238,48 @@ $(document).ready(function () {
         console.log(snapshot.val());
         console.log("age is: " + snapshot.val().age);
         if (snapshot.val().age < 30) {
-
+            updateAgeData(snapshot.val().movieTitle, "under 30", 0, snapshot.val().fistOfFive);
         } else if (snapshot.val().age < 40) {
-            console.log("****** the chart is: " + JSON.stringify(chart.dataProvider));
-            chart.dataProvider[1]["It"] = 1;
-            // chartData = chart;
-            chart.validateData();
-            console.log("****** the chart is: " + JSON.stringify(chart.dataProvider));
-            var ageData = ageMap.get(30);
-            if (ageData == null) {
-                ageMap.set(30, new Map().set(snapshot.val().movieTitle, [snapshot.val().fistOfFive]));
-                //  ageMap.set(30, {
-                //     'movieTitle' : snapshot.val().movieTitle, 
-                //     'fistArray' : [snapshot.val().fistOfFive]
-                // });
-                console.log("got to under 40 bucket, but was empty and now contains: " + JSON.stringify(ageMap.get(30)));
-                console.log("the fistarray is: " + ageMap.get(30).get(snapshot.val().movieTitle) );
-            } else {
-                // var array = ageMap.get(30).fistArray;
-                // console.log("the current array is: " + array);
-                // array.push(snapshot.val().fistOfFive);
-                // console.log("the updated array is: " + array);
-                // ageMap.set(30, {
-                //     'movieTitle' : snapshot.val().movieTitle, 
-                //     'fistArray' : array
-                // });
-                // console.log("the updated ageMap for 40 is: " + JSON.stringify(ageMap.get(30)));
-                // console.log("current count is: " + ageMap.get(30).fistArray.length);
-                // var sum = 0;
-                // var i = 0;
-                // for (; i < ageMap.get(30).fistArray.length; i++) {
-                //     sum += ageMap.get(30).fistArray[i];
-                // }
-                // console.log("current avg is: " + (sum / i));
-
-                var ageRangeMap = ageMap.get(30);
-                var array = ageRangeMap.get(snapshot.val().movieTitle);
-                console.log("the current array is: " + array);
-                array.push(snapshot.val().fistOfFive);
-                console.log("the updated array is: " + array);
-                ageRangeMap.set(snapshot.val().movieTitle, array);
-                console.log("The value of the ageRangeMap is: " + ageRangeMap.get(snapshot.val().movieTitle));
-                ageMap.set(30, ageRangeMap);
-                console.log("the updated ageMap for 30 is: " + (ageMap.get(30)));
-                console.log("the array from this movie is: " + ageMap.get(30).get(snapshot.val().movieTitle));
-                console.log("current count is: " + ageMap.get(30).get(snapshot.val().movieTitle).length);
-                var sum = 0;
-                var i = 0;
-                for (; i < ageMap.get(30).get(snapshot.val().movieTitle).length; i++) {
-                    sum += ageMap.get(30).get(snapshot.val().movieTitle)[i];
-                }
-                console.log("current avg is: " + (sum / i));
-                chart.dataProvider[1][snapshot.val().movieTitle] = (sum / i);
-                chart.validateData();
-                console.log("****** the chart is: " + JSON.stringify(chart.dataProvider));
-            }
+            updateAgeData(snapshot.val().movieTitle, "under 40", 1, snapshot.val().fistOfFive);
         } else if (snapshot.val().age < 50) {
-
+            updateAgeData(snapshot.val().movieTitle, "under 50", 2, snapshot.val().fistOfFive);
         } else {
-
+            updateAgeData(snapshot.val().movieTitle, "over 50", 3, snapshot.val().fistOfFive);
         }
 
         // If any errors are experienced, log them to console.
     }, function (errorObject) {
         console.log("The read failed: " + errorObject.code);
     });
+
+    function updateAgeData(movie, age, indexToChartData, fistValue) {
+
+        var ageData = ageMap.get(age);
+        if (ageData == null) {
+            ageMap.set(age, new Map().set(movie, [fistValue]));
+            console.log("the ageMap now has: " + ageMap.get(age));
+            console.log("==== " + ageMap.get(age).get(movie) + " ====");
+            chart.dataProvider[indexToChartData][movie] = fistValue;
+        } else {
+            var ageRangeMap = ageMap.get(age);
+            console.log("the current ageRangeMap is: " + ageRangeMap);
+            var array = ageRangeMap.get(movie);
+            if (array == null) { array = []; }
+            console.log("the array is: " + array);
+            array.push(fistValue);
+            ageRangeMap.set(movie, array);
+            ageMap.set(age, ageRangeMap);
+            var sum = 0;
+            var i = 0;
+            for (; i < ageMap.get(age).get(movie).length; i++) {
+                sum += ageMap.get(age).get(movie)[i];
+            }
+            console.log("current avg is: " + (sum / i));
+            chart.dataProvider[indexToChartData][movie] = (sum / i);
+        }
+        chart.validateData();
+        console.log("****** the chart is: " + JSON.stringify(chart.dataProvider));
+    }
 
 });
 
