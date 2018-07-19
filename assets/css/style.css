@@ -3,10 +3,12 @@ body {
     background: #000000 url("../images/country-quilt-dark.png") repeat right top;
 }
 
+/* White text color for all text not in a modal */
 div {
     color: #ffffff;
 }
 
+/* Force hr to be white */
 hr {
     display: block;
     height: 1px;
@@ -16,21 +18,24 @@ hr {
     padding: 0; 
 }
 
+/* Black text color for all text in a modal */
 .modal-text-color {
     color: #000000;
 }
 
+/* Forcing "Begin Survey" button down to be horizontally aligned */
 #modalIntializeButton {
     margin-top: 250px;
 }
 
-/* Setting for all four rating buttons */
+/* Settings for all four rating buttons */
 .ratingButtons {
     height: 80px;
     width: 70px;
     margin: 5px 1px 5px 0px;
 }
 
+/* Set width of movie posters */
 #movie-poster {
     width: 350px
 }
@@ -59,9 +64,3 @@ hr {
 #ratingButton5 {
     background-image: url("..//images/fist5-5.png");
 }
-
-#age-graph {
-	width		: 100%;
-	height		: 500px;
-	font-size	: 11px;
-}	

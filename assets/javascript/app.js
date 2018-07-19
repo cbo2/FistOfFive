@@ -13,6 +13,9 @@ $(document).ready(function () {
     const video = document.querySelector('#screenshot-video');
     const canvas = document.createElement('canvas');
 
+    // Object vairable to store data to be sent to Firebase
+    var database = Object;
+
     // Array to hold movies that will be in the survey
     var movieArray = ["It", "The Hangover", "The Notebook", "Deadpool", "Bad Boys", "Caddyshack", "Die Hard", "Black Panther"];
 
@@ -98,7 +101,7 @@ $(document).ready(function () {
         });
     }
 
-    // Function removes information from movie just rated and adds info for the next movie in index.html
+    // Function to remove information from movie just rated and adds info for the next movie in index.html
     function movieSurvey() {
         // Assign the movie poster URL to vairable imgURL
         var imgURL = movieDataMap.get(movieArray[movieArrayIndex]).Poster;
@@ -122,9 +125,31 @@ $(document).ready(function () {
         $("#movie-info").append("<h4>" + movieDataMap.get(movieArray[movieArrayIndex]).Genre + "</h4><br>");
     }
 
+    // Function to send data of each rating to Firebase
+    function addForMovie(movieTitle, fistOfFiveVote, gender, ethnicity, age, zipcode) {
+        console.log("The movie title is: " + movieTitle);
+        database.ref("/").push({
+            'movieTitle': movieTitle,
+            'fistOfFive': fistOfFiveVote,
+            'gender': gender,
+            'ethnicity': ethnicity,
+            'age': age,
+            'zipcode': zipcode
+        });
+    }
+
+    // Function to close out window at end
+    function closeWin() {
+        // Closes the window
+        myWindow.close();
+    }
+
     // MAIN PROCESS
     //******************************************************************************************************************
     //******************************************************************************************************************
+
+    // Call function to initialize Firebase
+    connectToFB();
 
     // Loop to pull in all info from OMDB for movies in movieArray
     for (var i = 0; i < movieArray.length; i++) {
@@ -244,32 +269,26 @@ $(document).ready(function () {
             // Append a final message once movie survey is completed in index.html
             $("#end-div").append("<h1 class=text-center>All Done! Thanks for taking the survey!</h1><br>")
 
+            // Assign a new button element to variable closeWindowButton
             var closeWindowButton = $("<button>");
+            // Assign type, class, and id to variable closeWindowButton
             closeWindowButton.attr({
-                "type": "button",
-                "class": "btn-lg btn-primary",
-                "onclick": "javacript:window.close()"
+                "type" : "button",
+                "class" : "btn-lg btn-primary",
+                "id" : "close-window-button"
             })
+            // Add text to be displayed in closeWindowButton
             closeWindowButton.text("Click to Close");
+            // Append button to the end-button-div div in index.html
             $("#end-button-div").append(closeWindowButton);
+            // Prepend a <br> to the rating-history div in index.html for aesthetics
             $("#rating-history").prepend("<br>");
         }
     });
 
-    // This code will send data to Firebase
-    var database = Object;
-
-    connectToFB();
-
-    function addForMovie(movieTitle, fistOfFiveVote, gender, ethnicity, age, zipcode) {
-        console.log("The movie title is: " + movieTitle);
-        database.ref("/").push({
-            'movieTitle': movieTitle,
-            'fistOfFive': fistOfFiveVote,
-            'gender': gender,
-            'ethnicity': ethnicity,
-            'age': age,
-            'zipcode': zipcode
-        });
-    }
+    // If user clicks the Click to Close button, then execute the below code to close window
+    $(document).on('click', "#close-window-button", function () {
+        // Closes current window
+        window.close();
+    });
 });
