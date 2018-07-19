@@ -221,7 +221,7 @@ $(document).ready(function () {
             $("#rating-history").append(movieArray[movieArrayIndex] + ": " + userRating + "<br><hr>");
             
             console.log("User just rated " + movieArray[movieArrayIndex] + " with a value of: " + userRating);
-            // Function sends data to Firebase
+            // persist the rating for this movie
             addForMovie(movieArray[movieArrayIndex], userRating, gender, ethnicity, age, zipcode);
             // Increase movieArrayIndex by one
             movieArrayIndex++;
@@ -233,6 +233,8 @@ $(document).ready(function () {
             // Assign the value of the rating to variable userRating when clicked for last movie rated in survey
             var userRating = parseInt($(this).attr("ratingValue"));
             $("#rating-history").append(movieArray[movieArrayIndex] + ": " + userRating + "<br><hr>");
+            // persist the rating for the last movie 
+            addForMovie(movieArray[movieArrayIndex], userRating, gender, ethnicity, age, zipcode);
             // Empty contents of movie-posters div in index.html
             $("#movie-posters").empty();
             // Empty contents of movie-info div in index.html

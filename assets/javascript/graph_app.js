@@ -274,8 +274,8 @@ $(document).ready(function () {
             for (; i < ageMap.get(age).get(movie).length; i++) {
                 sum += ageMap.get(age).get(movie)[i];
             }
-            console.log("current avg is: " + (sum / i));
-            chart.dataProvider[indexToChartData][movie] = (sum / i);
+            console.log("current avg is: " + Math.round((sum / i) * 100) / 100);
+            chart.dataProvider[indexToChartData][movie] = Math.round((sum / i) * 100) / 100;
         }
         chart.validateData();
         console.log("****** the chart is: " + JSON.stringify(chart.dataProvider));
