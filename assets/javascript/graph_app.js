@@ -8,15 +8,21 @@ $(document).ready(function () {
     // K = ethnicity, V = Map (K = title, V = array of vote values)
     var ethnicityMap = new Map();
 
+    // K = gender, V = Map (K = title, V = array of vote values)
+    var genderMap = new Map();
+
+
     // This code will send data to Firebase
     var database = Object;
 
-    // Charts
+    // Chart data
     var ageChart = "";
     var genderChart = "";
     var ethnicityChart = "";
     var allEthnicities = [];
     var ethnicityData = [];
+    var allGenders = [];
+    var genderData = [];
 
 
     updateCharts();
@@ -63,12 +69,43 @@ $(document).ready(function () {
             "dataProvider": generateEthnicityChartData(),
             "valueAxes": [{
                 "position": "left",
+                "gridCount": 10,
+                // "autoGridCount": "true",
+                // "min": 0,
+                // "max": 100,
                 "title": "Fist of Five Rating",
             }],
             "startDuration": 1,
             "graphs": generateGraphs(),
             "plotAreaFillAlphas": 0.1,
             "categoryField": "ethnicity",
+            "categoryAxis": {
+                "gridPosition": "start"
+            },
+            "export": {
+                "enabled": true
+            }
+        });
+
+        // generate the ethnicity chart
+        genderChart = AmCharts.makeChart("gender-graph", {
+            "theme": "none",
+            "type": "serial",
+            "legend": {
+                "equalWidths": false,
+                "position": "top",
+                "valueAlign": "left",
+                "valueWidth": 100,
+            },
+            "dataProvider": generateGenderChartData(),
+            "valueAxes": [{
+                "position": "left",
+                "title": "Fist of Five Rating",
+            }],
+            "startDuration": 1,
+            "graphs": generateGraphs(),
+            "plotAreaFillAlphas": 0.1,
+            "categoryField": "gender",
             "categoryAxis": {
                 "gridPosition": "start"
             },
@@ -215,12 +252,19 @@ $(document).ready(function () {
     function generateEthnicityChartData(newEntry) {
         if (newEntry != null) {
             ethnicityData.push(newEntry);
-            console.log("**** ethnicityData now has: " + JSON.stringify(ethnicityData) + " ****");
+            //console.log("**** ethnicityData now has: " + JSON.stringify(ethnicityData) + " ****");
         }
         return ethnicityData;
     }
 
- 
+    function generateGenderChartData(newEntry) {
+        if (newEntry != null) {
+            genderData.push(newEntry);
+            //console.log("**** genderData now has: " + JSON.stringify(genderData) + " ****");
+        }
+        return genderData;
+    }
+
     connectToFB();
 
     function connectToFB() {
@@ -237,12 +281,12 @@ $(document).ready(function () {
         database = firebase.database();
     }
 
-    testFB();
+    // testFB();
     function testFB() {
         database.ref("/").push({
             'movieTitle': "Bad Boys",
             'fistOfFive': 2,
-            'gender': "female",
+            'gender': "Female",
             'ethnicity': "WHITE",
             'age': 31,
             'zipcode': 60606
@@ -250,7 +294,7 @@ $(document).ready(function () {
         database.ref("/").push({
             'movieTitle': "Bad Boys",
             'fistOfFive': 3,
-            'gender': "female",
+            'gender': "Female",
             'ethnicity': "BLACK",
             'age': 32,
             'zipcode': 60606
@@ -258,7 +302,7 @@ $(document).ready(function () {
         database.ref("/").push({
             'movieTitle': "Bad Boys",
             'fistOfFive': 5,
-            'gender': "female",
+            'gender': "Male",
             'ethnicity': "WHITE",
             'age': 49,
             'zipcode': 60606
@@ -275,17 +319,18 @@ $(document).ready(function () {
     database.ref("/").on("child_added", function (snapshot) {
 
         // Print the local data to the console.
-        console.log(snapshot.val());
+        //console.log(snapshot.val());
         processByAge(snapshot);
         processByEthnicity(snapshot);
+        processByGender(snapshot);
 
         // If any errors are experienced, log them to console.
     }, function (errorObject) {
-        console.log("The read failed: " + errorObject.code);
+        //console.log("The read failed: " + errorObject.code);
     });
 
     function processByAge(snapshot) {
-        console.log("age is: " + snapshot.val().age);
+        //console.log("age is: " + snapshot.val().age);
         if (snapshot.val().age < 30) {
             updateAgeData(snapshot.val().movieTitle, "under 30", 0, snapshot.val().fistOfFive);
         }
@@ -305,15 +350,15 @@ $(document).ready(function () {
         // var ageData = ageMap.get(age);
         if (ageMap.get(age) == null) {
             ageMap.set(age, new Map().set(movie, [fistValue]));
-            console.log("the ageMap now has: " + ageMap.get(age));
-            console.log("==== " + ageMap.get(age).get(movie) + " ====");
+            //console.log("the ageMap now has: " + ageMap.get(age));
+            //console.log("==== " + ageMap.get(age).get(movie) + " ====");
             ageChart.dataProvider[indexToChartData][movie] = fistValue;
         } else {
             var ageRangeMap = ageMap.get(age);
-            console.log("the current ageRangeMap is: " + ageRangeMap);
+            //console.log("the current ageRangeMap is: " + ageRangeMap);
             var array = ageRangeMap.get(movie);
             if (array == null) { array = []; }
-            console.log("the array is: " + array);
+            //console.log("the array is: " + array);
             array.push(fistValue);
             ageRangeMap.set(movie, array);
             ageMap.set(age, ageRangeMap);
@@ -322,22 +367,22 @@ $(document).ready(function () {
             for (; i < ageMap.get(age).get(movie).length; i++) {
                 sum += ageMap.get(age).get(movie)[i];
             }
-            console.log("current avg is: " + Math.round((sum / i) * 100) / 100);
-            ageChart.dataProvider[indexToChartData][movie] = Math.round((sum / i) * 100) / 100;
+            //console.log("current avg is: " + Math.round((sum / i) * 100) / 100);
+            ageChart.dataProvider[indexToChartData][movie] = Math.round((sum / i) * 10) / 10;
         }
         ageChart.validateData();
-        console.log("****** the chart is: " + JSON.stringify(ageChart.dataProvider));
-    } 
+        //console.log("****** the chart is: " + JSON.stringify(ageChart.dataProvider));
+    }
 
     function processByEthnicity(snapshot) {
         var userEthnicity = snapshot.val().ethnicity;
-        console.log("ethnicity is: " + userEthnicity);
+        //console.log("ethnicity is: " + userEthnicity);
         foundBool = false;
         var i = 0;
         // for (; i < allEthnicities.length; i++) {
         while (!foundBool && i < allEthnicities.length) {
             if (allEthnicities[i] === userEthnicity) {
-                console.log("ethnicity found and using index: " + i);
+                //console.log("ethnicity found and using index: " + i);
                 foundBool = true;
             } else {
                 i++;
@@ -346,8 +391,6 @@ $(document).ready(function () {
         if (!foundBool) {
             // since we didn't see this ethnicity before and chart it, add it as a new one to the chart
             allEthnicities.push(userEthnicity);
-            // i++;  //  need to advance the value of i up by 1 used to index our data in the chart
-            var newData = [];
 
             generateEthnicityChartData(
                 {
@@ -372,15 +415,15 @@ $(document).ready(function () {
 
         if (ethnicityMap.get(ethnicity) == null) {
             ethnicityMap.set(ethnicity, new Map().set(movie, [fistValue]));
-            console.log("the ethnicityMap now has: " + JSON.stringify(ethnicityMap.get(ethnicity)));
-            console.log("==== " + ethnicityMap.get(ethnicity).get(movie) + " ====");
+            //console.log("the ethnicityMap now has: " + JSON.stringify(ethnicityMap.get(ethnicity)));
+            //console.log("==== " + ethnicityMap.get(ethnicity).get(movie) + " ====");
             ethnicityChart.dataProvider[indexToChartData][movie] = fistValue;
         } else {
             var ethnicityDetailMap = ethnicityMap.get(ethnicity);
-            console.log("the current ethnicityDetailMap is: " + JSON.stringify(ethnicityDetailMap));
+            //console.log("the current ethnicityDetailMap is: " + JSON.stringify(ethnicityDetailMap));
             var array = ethnicityDetailMap.get(movie);
             if (array == null) { array = []; }
-            console.log("the array is: " + array);
+            //console.log("the array is: " + array);
             array.push(fistValue);
             ethnicityDetailMap.set(movie, array);
             ethnicityMap.set(ethnicity, ethnicityDetailMap);
@@ -389,12 +432,78 @@ $(document).ready(function () {
             for (; j < ethnicityMap.get(ethnicity).get(movie).length; j++) {
                 sum += ethnicityMap.get(ethnicity).get(movie)[j];
             }
-            console.log("current avg is: " + Math.round((sum / j) * 100) / 100);
-            ethnicityChart.dataProvider[indexToChartData][movie] = Math.round((sum / j) * 100) / 100;
+            //console.log("current avg is: " + Math.round((sum / j) * 100) / 100);
+            ethnicityChart.dataProvider[indexToChartData][movie] = Math.round((sum / j) * 10) / 10;
         }
         ethnicityChart.validateData();
-        console.log("****** the ethnicity chart is: " + JSON.stringify(ethnicityChart.dataProvider));
-    } 
+        //console.log("****** the ethnicity chart is: " + JSON.stringify(ethnicityChart.dataProvider));
+    }
+
+    function processByGender(snapshot) {
+        var userGender = snapshot.val().gender;
+        //console.log("gender is: " + userGender);
+        foundBool = false;
+        var i = 0;
+        // for (; i < allEthnicities.length; i++) {
+        while (!foundBool && i < allGenders.length) {
+            if (allGenders[i] === userGender) {
+                //console.log("gender found and using index: " + i);
+                foundBool = true;
+            } else {
+                i++;
+            }
+        }
+        if (!foundBool) {
+            // since we didn't see this gender before and chart it, add it as a new one to the chart
+            allGenders.push(userGender);
+            // i++;  //  need to advance the value of i up by 1 used to index our data in the chart
+
+            generateGenderChartData(
+                {
+                    "gender": userGender,
+                    "It": 0,
+                    "The Hangover": 0,
+                    "The Notebook": 0,
+                    "Deadpool": 0,
+                    "Bad Boys": 0,
+                    "Caddyshack": 0,
+                    "Die Hard": 0,
+                    "Black Panther": 0
+                }
+            );
+            genderChart.validateData();
+
+        }
+        updateGenderData(snapshot.val().movieTitle, userGender, i, snapshot.val().fistOfFive);
+    }
+
+    function updateGenderData(movie, gender, indexToChartData, fistValue) {
+
+        if (genderMap.get(gender) == null) {
+            genderMap.set(gender, new Map().set(movie, [fistValue]));
+            //console.log("the genderMap now has: " + JSON.stringify(genderMap.get(gender)));
+            //console.log("==== " + genderMap.get(gender).get(movie) + " ====");
+            genderChart.dataProvider[indexToChartData][movie] = fistValue;
+        } else {
+            var genderDetailMap = genderMap.get(gender);
+            //console.log("the current genderDetailMap is: " + JSON.stringify(genderDetailMap));
+            var array = genderDetailMap.get(movie);
+            if (array == null) { array = []; }
+            //console.log("the array is: " + array);
+            array.push(fistValue);
+            genderDetailMap.set(movie, array);
+            genderMap.set(gender, genderDetailMap);
+            var sum = 0;
+            var j = 0;
+            for (; j < genderMap.get(gender).get(movie).length; j++) {
+                sum += genderMap.get(gender).get(movie)[j];
+            }
+            //console.log("current avg is: " + Math.round((sum / j) * 100) / 100);
+            genderChart.dataProvider[indexToChartData][movie] = Math.round((sum / j) * 10) / 10;
+        }
+        genderChart.validateData();
+        //console.log("****** the gender chart is: " + JSON.stringify(genderChart.dataProvider));
+    }
 });
 
 
