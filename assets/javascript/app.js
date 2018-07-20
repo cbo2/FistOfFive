@@ -88,7 +88,7 @@ $(document).ready(function () {
                 ethnicity = faces.faces[0].attributes.ethnicity.value;
                 gender = faces.faces[0].attributes.gender.value;
 
-                console.log("Success!  The result is:  " + json);
+                console.log("Success!  The result is:");
                 console.log("====== age is: " + age);
                 console.log("====== ethnicity is: " + ethnicity);
                 console.log("====== gender is: " + gender);
@@ -127,7 +127,6 @@ $(document).ready(function () {
 
     // Function to send data of each rating to Firebase
     function addForMovie(movieTitle, fistOfFiveVote, gender, ethnicity, age, zipcode) {
-        console.log("The movie title is: " + movieTitle);
         database.ref("/").push({
             'movieTitle': movieTitle,
             'fistOfFive': fistOfFiveVote,
