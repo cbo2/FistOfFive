@@ -23,7 +23,7 @@ APIs used:
     - html5 device (camera)
     - face++  (for demographic detection)
     - omdb (for cover art and genre)
-    - bar charting? (html5 Canvas Chart - https://canvasjs.com or https://www.amcharts.com/demos/)
+    - charting with amcharts API (html5 Canvas Chart - https://canvasjs.com or https://www.amcharts.com/demos/)
     - zipcode use to graph on a map?
 
 Presentation part:
