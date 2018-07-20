@@ -88,7 +88,7 @@ $(document).ready(function () {
                 ethnicity = faces.faces[0].attributes.ethnicity.value;
                 gender = faces.faces[0].attributes.gender.value;
 
-                console.log("Success!  The result is:  " + json);
+                console.log("Success!  The result is:");
                 console.log("====== age is: " + age);
                 console.log("====== ethnicity is: " + ethnicity);
                 console.log("====== gender is: " + gender);
@@ -127,7 +127,6 @@ $(document).ready(function () {
 
     // Function to send data of each rating to Firebase
     function addForMovie(movieTitle, fistOfFiveVote, gender, ethnicity, age, zipcode) {
-        console.log("The movie title is: " + movieTitle);
         database.ref("/").push({
             'movieTitle': movieTitle,
             'fistOfFive': fistOfFiveVote,
@@ -136,12 +135,6 @@ $(document).ready(function () {
             'age': age,
             'zipcode': zipcode
         });
-    }
-
-    // Function to close out window at end
-    function closeWin() {
-        // Closes the window
-        myWindow.close();
     }
 
     // MAIN PROCESS
@@ -190,7 +183,7 @@ $(document).ready(function () {
             canvas.height = 480;
             // Creates picture to pass to Face++
             canvas.getContext('2d').drawImage(video, 0, 0);
-            
+
             // Saves data into a url
             img.src = canvas.toDataURL('image/jpeg', 1.0);
             // Removes part of binary code to work with Face++
@@ -198,6 +191,10 @@ $(document).ready(function () {
 
             // Passes photo taken to Face++
             callFacePP(strippedImageSrc);
+
+            // Remove photo capture from session
+            img.src = "";
+            strippedImageSrc = "";
 
             // This will hide the modal that is brought up when user clicks on the submit survey button
             $("#startSurveyModal").modal("hide")
@@ -244,7 +241,7 @@ $(document).ready(function () {
             var userRating = parseInt($(this).attr("ratingValue"));
             // Append the movie rating into rating-history div in index.html
             $("#rating-history").append(movieArray[movieArrayIndex] + ": " + userRating + "<br><hr>");
-            
+
             console.log("User just rated " + movieArray[movieArrayIndex] + " with a value of: " + userRating);
             // persist the rating for this movie
             addForMovie(movieArray[movieArrayIndex], userRating, gender, ethnicity, age, zipcode);
@@ -273,9 +270,9 @@ $(document).ready(function () {
             var closeWindowButton = $("<button>");
             // Assign type, class, and id to variable closeWindowButton
             closeWindowButton.attr({
-                "type" : "button",
-                "class" : "btn-lg btn-primary",
-                "id" : "close-window-button"
+                "type": "button",
+                "class": "btn-lg btn-primary",
+                "id": "close-window-button"
             })
             // Add text to be displayed in closeWindowButton
             closeWindowButton.text("Click to Close");
