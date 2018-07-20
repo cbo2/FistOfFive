@@ -281,32 +281,32 @@ $(document).ready(function () {
         database = firebase.database();
     }
 
+
     // testFB();
     function testFB() {
-        database.ref("/").push({
-            'movieTitle': "Bad Boys",
-            'fistOfFive': 2,
-            'gender': "Female",
-            'ethnicity': "WHITE",
-            'age': 31,
-            'zipcode': 60606
-        });
-        database.ref("/").push({
-            'movieTitle': "Bad Boys",
-            'fistOfFive': 3,
-            'gender': "Female",
-            'ethnicity': "BLACK",
-            'age': 32,
-            'zipcode': 60606
-        });
-        database.ref("/").push({
-            'movieTitle': "Bad Boys",
-            'fistOfFive': 5,
-            'gender': "Male",
-            'ethnicity': "WHITE",
-            'age': 49,
-            'zipcode': 60606
-        });
+        var genderOptions = ['Female', 'Male'];
+        var ethnicityOptions = ['BLACK', 'WHITE', 'ASIAN', 'INDIA'];
+        var ageOptions = [22, 32, 42, 52, 23, 33, 43, 53, 24, 34, 44, 54];
+        var movieOptions = ["It", "The Hangover", "The Notebook", "Deadpool", "Bad Boys", "Caddyshack", "Die Hard", "Black Panther"];
+
+        for (i = 0; i < 40; i++) {    // simulate 40 users entering data
+            for (j = 0; j < movieOptions.length; j++) {  // go through all 8 movies for each user
+                var testMovie = movieOptions[Math.floor((Math.random() * movieOptions.length))];
+                var testFist = Math.floor((Math.random() * 5));
+                var testGender = genderOptions[Math.floor((Math.random() * genderOptions.length))];
+                var testEthnicity = ethnicityOptions[Math.floor((Math.random() * ethnicityOptions.length))];
+                var testAge = ageOptions[Math.floor((Math.random() * ageOptions.length))];
+                console.log("test with[" + testMovie + "," + testFist + "," + testGender + "," + testEthnicity + "," + testAge + "]");
+                database.ref("/").push({
+                    'movieTitle': testMovie,
+                    'fistOfFive': testFist,
+                    'gender': testGender,
+                    'ethnicity': testEthnicity,
+                    'age': testAge,
+                    'zipcode': 60606
+                });
+            }
+        }
     }
 
 
@@ -371,6 +371,7 @@ $(document).ready(function () {
             ageChart.dataProvider[indexToChartData][movie] = Math.round((sum / i) * 10) / 10;
         }
         ageChart.validateData();
+        console.log("****** age[" + age + "] and movie[" + movie + "] now makes chartdata: " + JSON.stringify(ageChart.dataProvider));
         //console.log("****** the chart is: " + JSON.stringify(ageChart.dataProvider));
     }
 
@@ -436,6 +437,7 @@ $(document).ready(function () {
             ethnicityChart.dataProvider[indexToChartData][movie] = Math.round((sum / j) * 10) / 10;
         }
         ethnicityChart.validateData();
+        console.log("****** ethnicity[" + ethnicity + "] and movie[" + movie + "] now makes chartdata: " + JSON.stringify(ageChart.dataProvider));
         //console.log("****** the ethnicity chart is: " + JSON.stringify(ethnicityChart.dataProvider));
     }
 
@@ -502,6 +504,7 @@ $(document).ready(function () {
             genderChart.dataProvider[indexToChartData][movie] = Math.round((sum / j) * 10) / 10;
         }
         genderChart.validateData();
+        console.log("****** gender[" + gender + "] and movie[" + movie + "] now makes chartdata: " + JSON.stringify(ageChart.dataProvider));
         //console.log("****** the gender chart is: " + JSON.stringify(genderChart.dataProvider));
     }
 });
