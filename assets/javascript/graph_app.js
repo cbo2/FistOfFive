@@ -371,7 +371,7 @@ $(document).ready(function () {
             ageChart.dataProvider[indexToChartData][movie] = Math.round((sum / i) * 10) / 10;
         }
         ageChart.validateData();
-        console.log("****** age[" + age + "] and movie[" + movie + "] now makes chartdata: " + JSON.stringify(ageChart.dataProvider));
+        // console.log("****** age[" + age + "] and movie[" + movie + "] now makes chartdata: " + JSON.stringify(ageChart.dataProvider));
         //console.log("****** the chart is: " + JSON.stringify(ageChart.dataProvider));
     }
 
@@ -437,7 +437,7 @@ $(document).ready(function () {
             ethnicityChart.dataProvider[indexToChartData][movie] = Math.round((sum / j) * 10) / 10;
         }
         ethnicityChart.validateData();
-        console.log("****** ethnicity[" + ethnicity + "] and movie[" + movie + "] now makes chartdata: " + JSON.stringify(ageChart.dataProvider));
+        // console.log("****** ethnicity[" + ethnicity + "] and movie[" + movie + "] now makes chartdata: " + JSON.stringify(ageChart.dataProvider));
         //console.log("****** the ethnicity chart is: " + JSON.stringify(ethnicityChart.dataProvider));
     }
 
@@ -504,7 +504,7 @@ $(document).ready(function () {
             genderChart.dataProvider[indexToChartData][movie] = Math.round((sum / j) * 10) / 10;
         }
         genderChart.validateData();
-        console.log("****** gender[" + gender + "] and movie[" + movie + "] now makes chartdata: " + JSON.stringify(ageChart.dataProvider));
+        // console.log("****** gender[" + gender + "] and movie[" + movie + "] now makes chartdata: " + JSON.stringify(ageChart.dataProvider));
         //console.log("****** the gender chart is: " + JSON.stringify(genderChart.dataProvider));
     }
 });
