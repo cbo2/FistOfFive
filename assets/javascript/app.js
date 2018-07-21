@@ -87,12 +87,6 @@ $(document).ready(function () {
                 age = faces.faces[0].attributes.age.value;
                 ethnicity = faces.faces[0].attributes.ethnicity.value;
                 gender = faces.faces[0].attributes.gender.value;
-
-                console.log("Success!  The result is:");
-                console.log("====== age is: " + age);
-                console.log("====== ethnicity is: " + ethnicity);
-                console.log("====== gender is: " + gender);
-                console.log("attributes: " + face_attributes);
             },
             error: function (error) {
                 console.log("there was an error! " + JSON.stringify(error));
@@ -242,15 +236,14 @@ $(document).ready(function () {
             // Append the movie rating into rating-history div in index.html
             $("#rating-history").append(movieArray[movieArrayIndex] + ": " + userRating + "<br><hr>");
 
-            console.log("User just rated " + movieArray[movieArrayIndex] + " with a value of: " + userRating);
-            // persist the rating for this movie
+            // Persist the rating for this movie
             addForMovie(movieArray[movieArrayIndex], userRating, gender, ethnicity, age, zipcode);
             // Increase movieArrayIndex by one
             movieArrayIndex++;
             // Function removes information from movie just rated and adds info for the next movie in index.html
             movieSurvey();
 
-            // Run this code if all movies have been rated
+        // Run this code if all movies have been rated
         } else {
             // Assign the value of the rating to variable userRating when clicked for last movie rated in survey
             var userRating = parseInt($(this).attr("ratingValue"));
