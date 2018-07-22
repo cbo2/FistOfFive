@@ -17,13 +17,14 @@ Roles:
     - UI
     - backend APIs
     - presentation
-    - trello master (Don)
+    - trello master (Don) (https://trello.com/)
 
 APIs used:
-    - html5 device (camera)
-    - face++  (for demographic detection)
+    - interacting with the camera in html5 (https://www.w3schools.com/graphics/canvas_intro.asp and https://canvasjs.com)
+    - face++  (for demographic detection - https://www.faceplusplus.com)
     - omdb (for cover art and genre)
-    - charting with amcharts API (html5 Canvas Chart - https://canvasjs.com or https://www.amcharts.com/demos/)
+    - charting with amcharts API (https://www.amcharts.com/demos/)
+    - persistence with Firebase (https://firebase.google.com/docs/reference/js/firebase.database.Reference?authuser=0#on)
     - zipcode use to graph on a map?
 
 Presentation part:
