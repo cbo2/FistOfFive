@@ -1,5 +1,5 @@
-# GroupProject1
-This will be the work of don, josh, and cbo (Fist of Five Enterprises) -- line added by cbo on 7/9/2018
+# Fist of Five Enterprises
+This will be the work of don, josh, and cbo
 
 Functionality:
     - present user with an initial screen that shows a box with their live camera.  This screen also can take a zip code and has a "Get Started" button.  Once they hit that button we will snap their pic and hold the demographic data.
@@ -8,8 +8,8 @@ Functionality:
     - use fist of five to rate
     - reward for user is to recognize the genre they like and go find a movie they would like and suggest it to them (the suggestion will be a random movie based on genre)
     - while they hit their rating snap a pic and pass to face++
-    - BTW, we will need to have some kind of box onscreen to show their face (not the still, but the cam)
-    - the fist of five icon could be a giphy or pic of some kind as a button (reuse Josh diamond project)
+    - we will need to have some kind of box onscreen to show their face (not the still, but the cam)
+    - the fist of five icon could be a giphy or pic of some kind as a button 
     - as users complete votes we would push to firebase.  As firebase gets populated we will have our callback update dashboard graphs.
     - 
 
@@ -37,7 +37,7 @@ Presentation part:
 
 
 Tasks:
-    - Don has fist of five images
+    - Fist of five images
     - Testing:
         - mobile responsive
 
